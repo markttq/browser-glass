@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "ChatGPT Thinking Helper",
-  "version": "0.8.2",
-  "description": "Stable Tahoe glass theme with lightweight navigation tracking and Instant/Medium/High Shift+Tab cycling.",
+  "version": "0.8.5",
+  "description": "Stable Tahoe glass theme with high-contrast main-pane text selection and lightweight navigation tracking.",
   "content_scripts": [
     {
       "matches": [

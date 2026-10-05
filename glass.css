@@ -32,6 +32,15 @@
   --app-color-background-primary-inverse: transparent !important;
 }
 
+/* Keep mouse-selected text in the main reading pane high-contrast. */
+html [data-app-shell-main-surface="browser"]::selection,
+html [data-app-shell-main-surface="browser"] *::selection,
+html .MainContentSurface-EnuIYE::selection,
+html .MainContentSurface-EnuIYE *::selection {
+  background-color: var(--cgh-blue) !important;
+  color: rgb(var(--cgh-crust)) !important;
+}
+
 /* Keep the shortcut-opened picker hidden without injecting a runtime style. */
 html[data-chatgpt-thinking-helper-stealth="true"] [data-radix-popper-content-wrapper] {
   visibility: hidden !important;
