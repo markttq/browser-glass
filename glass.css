@@ -1,0 +1,166 @@
+/* ChatGPT Thinking Helper v0.7.0
+   One Tahoe wallpaper hosted directly on the app frame.
+   Descendant surfaces are glass only; no separate fixed wallpaper node. */
+
+:root {
+  --cgh-crust: 17, 17, 27;
+  --cgh-mantle: 24, 24, 37;
+  --cgh-base: 30, 30, 46;
+  --cgh-text: #cdd6f4;
+  --cgh-subtext1: #bac2de;
+  --cgh-subtext0: #a6adc8;
+  --cgh-blue: #89b4fa;
+  --cgh-mauve: #cba6f7;
+
+  --codex-base-accent: var(--cgh-blue) !important;
+  --codex-base-ink: var(--cgh-text) !important;
+  --app-color-accent-blue: var(--cgh-blue) !important;
+  --app-color-accent-purple: var(--cgh-mauve) !important;
+  --app-color-icon-primary: var(--cgh-text) !important;
+  --app-color-icon-secondary: var(--cgh-subtext1) !important;
+  --app-color-icon-tertiary: var(--cgh-subtext0) !important;
+  --app-color-text-foreground: var(--cgh-text) !important;
+  --app-color-text-foreground-secondary: var(--cgh-subtext1) !important;
+  --app-color-text-foreground-tertiary: var(--cgh-subtext0) !important;
+
+  /* ChatGPT's browser theme paints these opaque by default. */
+  --codex-base-surface: transparent !important;
+  --app-color-background-shell: transparent !important;
+  --app-color-background-surface: transparent !important;
+  --app-color-background-surface-under: transparent !important;
+  --color-background-panel: transparent !important;
+  --app-color-background-primary-inverse: transparent !important;
+}
+
+/* Keep the shortcut-opened picker hidden without injecting a runtime style. */
+html[data-chatgpt-thinking-helper-stealth="true"] [data-radix-popper-content-wrapper] {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: none !important;
+  animation: none !important;
+}
+
+html,
+body,
+#root {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Wallpaper URL is injected by content.js with chrome.runtime.getURL().
+   Body fallback means the image still renders even if the app-frame attribute changes. */
+html, body, #root {
+  min-height: 100% !important;
+}
+body {
+  background-color: rgb(var(--cgh-crust)) !important;
+  background-image:
+    linear-gradient(rgba(var(--cgh-crust), .34), rgba(var(--cgh-crust), .34)),
+    var(--cgh-wallpaper-image) !important;
+  background-size: 100vw 100vh, 100vw 100vh !important;
+  background-position: left top, left top !important;
+  background-repeat: no-repeat, no-repeat !important;
+  background-attachment: fixed, fixed !important;
+}
+
+/* The ONE wallpaper image lives on ChatGPT's own top-level frame.
+   This avoids the root stacking-context problem that hid the old fixed layer. */
+[data-app-shell-frame="true"] {
+  background-color: rgb(var(--cgh-crust)) !important;
+  background-image:
+    linear-gradient(rgba(var(--cgh-crust), .34), rgba(var(--cgh-crust), .34)),
+    var(--cgh-wallpaper-image) !important;
+  background-size: 100vw 100vh, 100vw 100vh !important;
+  background-position: left top, left top !important;
+  background-repeat: no-repeat, no-repeat !important;
+  background-attachment: fixed, fixed !important;
+}
+
+/* Exact current app-shell structural layers from the supplied DOM. */
+[data-app-shell-workspace-row="true"],
+[data-app-shell-active-page="true"],
+[data-app-shell-page-surface="true"],
+.Workspace-IfYAxV,
+.MainContentClip-QvkcTI,
+.PageSurface-g2Llyi,
+.FullHeightPageSurface-Spy7z1,
+.FullHeightPageSurfaceLayout-nI_dSf {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+/* Current actual main surface. One dark translucent material only. */
+[data-app-shell-main-surface="browser"],
+.MainContentSurface-EnuIYE {
+  background: rgba(var(--cgh-mantle), .61) !important;
+  background-image: none !important;
+  backdrop-filter: blur(27px) saturate(104%) !important;
+  -webkit-backdrop-filter: blur(27px) saturate(104%) !important;
+}
+
+/* Inner scroll/content layers must not introduce another fill. */
+[data-app-shell-focus-area="main"],
+[data-app-action-timeline-scroll],
+.MainContentViewport-OinMfT,
+.MainContentFrame-sss8BP,
+.thread-scroll-container {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Top fade should fade the same glass, not become a solid strip. */
+.MainContentTopFade-T6W4RS,
+[class*="MainContentTopFade-"] {
+  background-color: transparent !important;
+}
+
+/* Sidebar: more transparent than the main reading plane. */
+#app-shell-sidebar {
+  background: rgba(var(--cgh-crust), .22) !important;
+  background-image: none !important;
+  backdrop-filter: blur(24px) saturate(102%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(102%) !important;
+  border-right: 1px solid rgba(205,214,244,.08) !important;
+}
+
+/* The current nav rail normally paints bg-surface-secondary. */
+[data-app-navigation-rail="true"],
+.sidebar-navigation,
+.Navigation-bibgtK {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Composer card remains intentionally denser. */
+[data-composer-surface-variant],
+.ComposerLayoutRoot-XCKS7O {
+  background: rgba(var(--cgh-mantle), .86) !important;
+  background-image: none !important;
+  border: 1px solid rgba(205,214,244,.11) !important;
+  box-shadow: 0 12px 34px rgba(0,0,0,.30) !important;
+  backdrop-filter: blur(25px) saturate(106%) !important;
+  -webkit-backdrop-filter: blur(25px) saturate(106%) !important;
+}
+
+/* Remove the bottom/footer band at the exact current composer layers. */
+.ComposerModeSurface-lVLm7j,
+.ComposerLayoutBody-uBBf1A,
+.ComposerLayoutFooter-_8IVRO,
+.floatingComposerInset-KDct6F,
+[data-chatgpt-composer],
+[data-above-composer-portal] {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+[data-sidebar-chatgpt-conversation-key] [aria-current="page"] {
+  background: rgba(180,190,254,.11) !important;
+}
+[data-sidebar-chatgpt-conversation-key] [aria-current="page"]:hover {
+  background: rgba(180,190,254,.16) !important;
+}
