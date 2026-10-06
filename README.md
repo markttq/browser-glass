@@ -1,4 +1,4 @@
-# ChatGPT Thinking Helper v0.8.9
+# ChatGPT Thinking Helper v0.8.10
 
 Aligned build based on the known-working v0.8.1 behavior, with the lower-overhead navigation tracking from v0.8.0.
 

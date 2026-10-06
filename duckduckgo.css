@@ -12,6 +12,14 @@ body.body--serp {
   background-attachment: fixed, fixed !important;
 }
 
+/* DuckDuckGo paints this full-page wrapper over the body background. */
+body.body--serp .site-wrapper,
+body.body--serp .footer,
+body.body--serp .footer--mobile {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
 body.body--serp .header-wrap {
   background-color: rgba(255, 255, 255, .82) !important;
 }
