@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "ChatGPT Thinking Helper",
-  "version": "0.8.11",
+  "version": "0.8.12",
   "description": "Tahoe wallpaper for ChatGPT and DuckDuckGo search, with ChatGPT glass and reasoning shortcuts.",
   "content_scripts": [
     {

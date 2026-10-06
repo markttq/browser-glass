@@ -18,13 +18,22 @@ body.body--serp {
   min-height: 100vh !important;
   font-family: var(--cgh-ddg-font) !important;
   background-color: #f2f2f2 !important;
+  background-image: none !important;
+  isolation: isolate;
+}
+
+body.body--serp::before {
+  content: "";
+  position: fixed;
+  inset: 12px;
+  z-index: -1;
+  pointer-events: none;
   background-image:
     linear-gradient(var(--cgh-ddg-tint), var(--cgh-ddg-tint)),
     var(--cgh-wallpaper-image) !important;
-  background-size: 100vw 100vh, cover !important;
+  background-size: 100% 100%, cover !important;
   background-position: left top, left top !important;
   background-repeat: no-repeat, no-repeat !important;
-  background-attachment: fixed, fixed !important;
 }
 
 body.body--serp :is(button, input, select, textarea) {
