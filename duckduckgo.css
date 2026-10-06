@@ -1,7 +1,22 @@
 /* Keep DuckDuckGo's result text and controls intact while showing the wallpaper. */
 body.body--serp {
+  --cgh-ddg-font: "JetBrainsMono Nerd Font", ui-monospace, Menlo, monospace;
+  --sds-font-family-01: var(--cgh-ddg-font);
+  --sds-font-family-monospace: var(--cgh-ddg-font);
+  --ds-font-family-product: var(--cgh-ddg-font);
+  --ds-font-family-display: var(--cgh-ddg-font);
+  --ds-font-button-label-02-font-family: var(--cgh-ddg-font);
+  --ds-font-button-label-03-font-family: var(--cgh-ddg-font);
+  --ds-font-label-01-font-family: var(--cgh-ddg-font);
+  --ds-font-title-05-font-family: var(--cgh-ddg-font);
+  --ducksans-product-font-family: var(--cgh-ddg-font);
+  --ducksans-display-font-family: var(--cgh-ddg-font);
+  --ducksans-product-letter-spacing: normal;
+  --ducksans-display-letter-spacing: normal;
+  --theme-font-family-result-title: var(--cgh-ddg-font);
   --cgh-ddg-tint: rgba(255, 255, 255, .72);
   min-height: 100vh !important;
+  font-family: var(--cgh-ddg-font) !important;
   background-color: #f2f2f2 !important;
   background-image:
     linear-gradient(var(--cgh-ddg-tint), var(--cgh-ddg-tint)),
@@ -10,6 +25,10 @@ body.body--serp {
   background-position: left top, left top !important;
   background-repeat: no-repeat, no-repeat !important;
   background-attachment: fixed, fixed !important;
+}
+
+body.body--serp :is(button, input, select, textarea) {
+  font-family: var(--cgh-ddg-font) !important;
 }
 
 /* DuckDuckGo paints this full-page wrapper over the body background. */
@@ -27,7 +46,7 @@ body.body--serp .header-wrap {
 html.set-theme--dark body.body--serp,
 html.set-theme--terminal body.body--serp,
 html.dark-bg body.body--serp {
-  --cgh-ddg-tint: rgba(17, 17, 27, .70);
+  --cgh-ddg-tint: rgba(17, 17, 27, .88);
   background-color: #11111b !important;
 }
 
@@ -39,7 +58,7 @@ html.dark-bg body.body--serp .header-wrap {
 
 @media (prefers-color-scheme: dark) {
   html.no-theme body.body--serp {
-    --cgh-ddg-tint: rgba(17, 17, 27, .70);
+    --cgh-ddg-tint: rgba(17, 17, 27, .88);
     background-color: #11111b !important;
   }
 
