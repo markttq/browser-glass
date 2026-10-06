@@ -105,10 +105,10 @@ body {
 /* Current actual main surface. One dark translucent material only. */
 [data-app-shell-main-surface="browser"],
 .MainContentSurface-EnuIYE {
-  background: rgba(var(--cgh-mantle), .61) !important;
+  background: rgba(var(--cgh-mantle), .65) !important;
   background-image: none !important;
-  backdrop-filter: blur(27px) saturate(104%) !important;
-  -webkit-backdrop-filter: blur(27px) saturate(104%) !important;
+  backdrop-filter: blur(30px) saturate(104%) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(104%) !important;
 }
 
 /* Inner scroll/content layers must not introduce another fill. */
