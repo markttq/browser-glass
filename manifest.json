@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "ChatGPT Thinking Helper",
-  "version": "0.8.8",
-  "description": "Stable Tahoe glass theme with an anchored, boulder-free wallpaper and enhanced readability.",
+  "version": "0.8.9",
+  "description": "Tahoe wallpaper for ChatGPT and DuckDuckGo search, with ChatGPT glass and reasoning shortcuts.",
   "content_scripts": [
     {
       "matches": [
@@ -16,6 +16,18 @@
       "css": [
         "glass.css"
       ]
+    },
+    {
+      "matches": [
+        "https://duckduckgo.com/*"
+      ],
+      "js": [
+        "duckduckgo-wallpaper.js"
+      ],
+      "run_at": "document_start",
+      "css": [
+        "duckduckgo.css"
+      ]
     }
   ],
   "web_accessible_resources": [
@@ -25,7 +37,8 @@
       ],
       "matches": [
         "https://chatgpt.com/*",
-        "https://chat.openai.com/*"
+        "https://chat.openai.com/*",
+        "https://duckduckgo.com/*"
       ]
     }
   ]

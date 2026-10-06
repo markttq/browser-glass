@@ -1,10 +1,11 @@
-# ChatGPT Thinking Helper v0.8.8
+# ChatGPT Thinking Helper v0.8.9
 
 Aligned build based on the known-working v0.8.1 behavior, with the lower-overhead navigation tracking from v0.8.0.
 
 - Preserves the working Tahoe wallpaper fallback and glass appearance.
 - Replaces the large bottom-right foreground boulder with matching lake water while retaining the original image outside the edit mask.
 - Keeps the wallpaper proportional when resizing, anchored at the left so a narrower window crops the right edge.
+- Shows the Tahoe wallpaper behind DuckDuckGo search results with a tint that follows its light or dark theme.
 - Uses the Catppuccin mantle tint at 65% opacity and 16px blur for the main pane.
 - Applies a high-contrast selection highlight across the main reading pane.
 - Keeps the tested picker discovery, focus restoration, and Instant → Medium → High → Instant shortcut cycle.

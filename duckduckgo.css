@@ -1,0 +1,41 @@
+/* Keep DuckDuckGo's result text and controls intact while showing the wallpaper. */
+body.body--serp {
+  --cgh-ddg-tint: rgba(255, 255, 255, .72);
+  min-height: 100vh !important;
+  background-color: #f2f2f2 !important;
+  background-image:
+    linear-gradient(var(--cgh-ddg-tint), var(--cgh-ddg-tint)),
+    var(--cgh-wallpaper-image) !important;
+  background-size: 100vw 100vh, cover !important;
+  background-position: left top, left top !important;
+  background-repeat: no-repeat, no-repeat !important;
+  background-attachment: fixed, fixed !important;
+}
+
+body.body--serp .header-wrap {
+  background-color: rgba(255, 255, 255, .82) !important;
+}
+
+html.set-theme--dark body.body--serp,
+html.set-theme--terminal body.body--serp,
+html.dark-bg body.body--serp {
+  --cgh-ddg-tint: rgba(17, 17, 27, .62);
+  background-color: #11111b !important;
+}
+
+html.set-theme--dark body.body--serp .header-wrap,
+html.set-theme--terminal body.body--serp .header-wrap,
+html.dark-bg body.body--serp .header-wrap {
+  background-color: rgba(17, 17, 27, .78) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  html.no-theme body.body--serp {
+    --cgh-ddg-tint: rgba(17, 17, 27, .62);
+    background-color: #11111b !important;
+  }
+
+  html.no-theme body.body--serp .header-wrap {
+    background-color: rgba(17, 17, 27, .78) !important;
+  }
+}
