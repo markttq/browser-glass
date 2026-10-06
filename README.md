@@ -1,10 +1,12 @@
-# ChatGPT Thinking Helper v0.8.14
+# Browser Glass
 
-Aligned build based on the known-working v0.8.1 behavior, with the lower-overhead navigation tracking from v0.8.0.
+Tahoe wallpaper and glass styling for ChatGPT and DuckDuckGo, with ChatGPT reasoning shortcuts.
+
+Version 0.8.15.
 
 - Preserves the working Tahoe wallpaper fallback and glass appearance.
 - Replaces the large bottom-right foreground boulder with matching lake water while retaining the original image outside the edit mask.
-- Keeps the wallpaper proportional when resizing, anchored at the left so a narrower window crops the right edge.
+- Keeps the wallpaper proportional when resizing: fullscreen and windows at least half the display width use the top left; narrower windows use the top right. Updates automatically on resize for ChatGPT and DuckDuckGo.
 - Crops 12px from each wallpaper edge on ChatGPT and DuckDuckGo without moving the page content.
 - Shows the Tahoe wallpaper behind DuckDuckGo search results with a tint that follows its light or dark theme and uses the terminal's JetBrainsMono Nerd Font.
 - Uses the Catppuccin mantle tint at 65% opacity and 16px blur for the main pane.
@@ -20,6 +22,6 @@ Aligned build based on the known-working v0.8.1 behavior, with the lower-overhea
 1. Open `vivaldi://extensions`.
 2. Enable **Developer mode**.
 3. Choose **Load unpacked** and select this folder.
-4. Reload ChatGPT after loading the extension.
+4. Refresh ChatGPT and DuckDuckGo tabs after loading the extension.
 
 Shortcut: **Shift+Tab** cycles Instant → Medium → High → Instant. XHigh/Pro remain manual-only.

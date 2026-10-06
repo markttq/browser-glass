@@ -61,7 +61,7 @@ body,
   background-image: none !important;
 }
 
-/* Wallpaper URL is injected by content.js with chrome.runtime.getURL(). */
+/* Wallpaper URL and position are injected by wallpaper.js with chrome.runtime.getURL(). */
 html, body, #root {
   min-height: 100% !important;
 }
@@ -71,7 +71,7 @@ body {
     linear-gradient(rgba(var(--cgh-crust), .34), rgba(var(--cgh-crust), .34)),
     var(--cgh-wallpaper-image) !important;
   background-size: 100vw 100vh, var(--cgh-wallpaper-width) auto !important;
-  background-position: left top, left calc(-1 * var(--cgh-wallpaper-crop)) top calc(-1 * var(--cgh-wallpaper-crop)) !important;
+  background-position: left top, var(--cgh-wallpaper-position, left calc(-1 * var(--cgh-wallpaper-crop)) top calc(-1 * var(--cgh-wallpaper-crop))) !important;
   background-repeat: no-repeat, no-repeat !important;
   background-attachment: fixed, fixed !important;
 }
@@ -83,7 +83,7 @@ body {
     linear-gradient(rgba(var(--cgh-crust), .34), rgba(var(--cgh-crust), .34)),
     var(--cgh-wallpaper-image) !important;
   background-size: 100vw 100vh, var(--cgh-wallpaper-width) auto !important;
-  background-position: left top, left calc(-1 * var(--cgh-wallpaper-crop)) top calc(-1 * var(--cgh-wallpaper-crop)) !important;
+  background-position: left top, var(--cgh-wallpaper-position, left calc(-1 * var(--cgh-wallpaper-crop)) top calc(-1 * var(--cgh-wallpaper-crop))) !important;
   background-repeat: no-repeat, no-repeat !important;
   background-attachment: fixed, fixed !important;
 }

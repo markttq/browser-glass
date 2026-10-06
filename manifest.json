@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "ChatGPT Thinking Helper",
-  "version": "0.8.14",
+  "name": "Browser Glass",
+  "version": "0.8.15",
   "description": "Tahoe wallpaper for ChatGPT and DuckDuckGo search, with ChatGPT glass and reasoning shortcuts.",
   "content_scripts": [
     {
@@ -10,6 +10,7 @@
         "https://chat.openai.com/*"
       ],
       "js": [
+        "wallpaper.js",
         "content.js"
       ],
       "run_at": "document_idle",
@@ -22,7 +23,7 @@
         "https://duckduckgo.com/*"
       ],
       "js": [
-        "duckduckgo-wallpaper.js"
+        "wallpaper.js"
       ],
       "run_at": "document_start",
       "css": [

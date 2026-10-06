@@ -1,12 +1,4 @@
 (() => {
-  // v0.7.0: resolve the bundled wallpaper to an absolute extension URL.
-  // This avoids page-relative URL resolution and works regardless of ChatGPT route.
-  const wallpaperUrl = chrome.runtime.getURL("tahoe-day.jpg");
-  document.documentElement.style.setProperty(
-    "--cgh-wallpaper-image",
-    `url("${wallpaperUrl}")`,
-  );
-
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   // Shortcut-owned levels only: Instant (0) -> Medium (1) -> High (2).
