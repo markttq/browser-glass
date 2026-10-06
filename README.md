@@ -1,11 +1,11 @@
-# ChatGPT Thinking Helper v0.8.13
+# ChatGPT Thinking Helper v0.8.14
 
 Aligned build based on the known-working v0.8.1 behavior, with the lower-overhead navigation tracking from v0.8.0.
 
 - Preserves the working Tahoe wallpaper fallback and glass appearance.
 - Replaces the large bottom-right foreground boulder with matching lake water while retaining the original image outside the edit mask.
 - Keeps the wallpaper proportional when resizing, anchored at the left so a narrower window crops the right edge.
-- Insets the ChatGPT and DuckDuckGo page panels by 12px, with rounded corners and wallpaper visible around them.
+- Crops 12px from each wallpaper edge on ChatGPT and DuckDuckGo without moving the page content.
 - Shows the Tahoe wallpaper behind DuckDuckGo search results with a tint that follows its light or dark theme and uses the terminal's JetBrainsMono Nerd Font.
 - Uses the Catppuccin mantle tint at 65% opacity and 16px blur for the main pane.
 - Applies a high-contrast selection highlight across the main reading pane.

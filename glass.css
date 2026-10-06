@@ -1,4 +1,4 @@
-/* One Tahoe wallpaper behind an inset, rounded app frame. */
+/* Tahoe wallpaper follows the full app frame; only the image is cropped at the edges. */
 
 :root {
   --cgh-crust: 17, 17, 27;
@@ -9,7 +9,11 @@
   --cgh-subtext0: #a6adc8;
   --cgh-blue: #89b4fa;
   --cgh-mauve: #cba6f7;
-  --cgh-screen-edge-gap: 12px;
+  --cgh-wallpaper-crop: 12px;
+  --cgh-wallpaper-width: max(
+    calc(100vw + 2 * var(--cgh-wallpaper-crop)),
+    calc((100vh + 2 * var(--cgh-wallpaper-crop)) * 16 / 9)
+  );
 
   --codex-base-accent: var(--cgh-blue) !important;
   --codex-base-ink: var(--cgh-text) !important;
@@ -66,24 +70,22 @@ body {
   background-image:
     linear-gradient(rgba(var(--cgh-crust), .34), rgba(var(--cgh-crust), .34)),
     var(--cgh-wallpaper-image) !important;
-  background-size: 100vw 100vh, cover !important;
-  background-position: left top, left top !important;
+  background-size: 100vw 100vh, var(--cgh-wallpaper-width) auto !important;
+  background-position: left top, left calc(-1 * var(--cgh-wallpaper-crop)) top calc(-1 * var(--cgh-wallpaper-crop)) !important;
   background-repeat: no-repeat, no-repeat !important;
   background-attachment: fixed, fixed !important;
 }
 
-/* Leave the body wallpaper visible around the rounded app frame. */
+/* Keep the app layout unchanged; use the same cropped wallpaper as the body. */
 [data-app-shell-frame="true"] {
-  box-sizing: border-box !important;
-  width: calc(100% - var(--cgh-screen-edge-gap) - var(--cgh-screen-edge-gap)) !important;
-  height: calc(100dvh - var(--cgh-screen-edge-gap) - var(--cgh-screen-edge-gap)) !important;
-  min-height: 0 !important;
-  margin: var(--cgh-screen-edge-gap) !important;
-  overflow: hidden !important;
-  border: 1px solid rgba(205, 214, 244, .18) !important;
-  border-radius: 16px !important;
-  background: rgba(var(--cgh-crust), .28) !important;
-  box-shadow: 0 10px 32px rgba(0, 0, 0, .25) !important;
+  background-color: rgb(var(--cgh-crust)) !important;
+  background-image:
+    linear-gradient(rgba(var(--cgh-crust), .34), rgba(var(--cgh-crust), .34)),
+    var(--cgh-wallpaper-image) !important;
+  background-size: 100vw 100vh, var(--cgh-wallpaper-width) auto !important;
+  background-position: left top, left calc(-1 * var(--cgh-wallpaper-crop)) top calc(-1 * var(--cgh-wallpaper-crop)) !important;
+  background-repeat: no-repeat, no-repeat !important;
+  background-attachment: fixed, fixed !important;
 }
 
 /* Exact current app-shell structural layers from the supplied DOM. */
