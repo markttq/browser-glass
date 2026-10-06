@@ -1,6 +1,4 @@
-/* ChatGPT Thinking Helper v0.7.0
-   One Tahoe wallpaper hosted directly on the app frame.
-   Descendant surfaces are glass only; no separate fixed wallpaper node. */
+/* One Tahoe wallpaper behind an inset, rounded app frame. */
 
 :root {
   --cgh-crust: 17, 17, 27;
@@ -59,49 +57,33 @@ body,
   background-image: none !important;
 }
 
-/* Wallpaper URL is injected by content.js with chrome.runtime.getURL().
-   Body fallback means the image still renders even if the app-frame attribute changes. */
+/* Wallpaper URL is injected by content.js with chrome.runtime.getURL(). */
 html, body, #root {
   min-height: 100% !important;
 }
 body {
   background-color: rgb(var(--cgh-crust)) !important;
   background-image:
-    linear-gradient(to right,
-      rgb(var(--cgh-crust)) 0 var(--cgh-screen-edge-gap),
-      transparent var(--cgh-screen-edge-gap) calc(100% - var(--cgh-screen-edge-gap)),
-      rgb(var(--cgh-crust)) calc(100% - var(--cgh-screen-edge-gap))),
-    linear-gradient(to bottom,
-      rgb(var(--cgh-crust)) 0 var(--cgh-screen-edge-gap),
-      transparent var(--cgh-screen-edge-gap) calc(100% - var(--cgh-screen-edge-gap)),
-      rgb(var(--cgh-crust)) calc(100% - var(--cgh-screen-edge-gap))),
     linear-gradient(rgba(var(--cgh-crust), .34), rgba(var(--cgh-crust), .34)),
     var(--cgh-wallpaper-image) !important;
-  background-size: 100vw 100vh, 100vw 100vh, 100vw 100vh, cover !important;
-  background-position: left top !important;
-  background-repeat: no-repeat !important;
-  background-attachment: fixed !important;
+  background-size: 100vw 100vh, cover !important;
+  background-position: left top, left top !important;
+  background-repeat: no-repeat, no-repeat !important;
+  background-attachment: fixed, fixed !important;
 }
 
-/* The ONE wallpaper image lives on ChatGPT's own top-level frame.
-   This avoids the root stacking-context problem that hid the old fixed layer. */
+/* Leave the body wallpaper visible around the rounded app frame. */
 [data-app-shell-frame="true"] {
-  background-color: rgb(var(--cgh-crust)) !important;
-  background-image:
-    linear-gradient(to right,
-      rgb(var(--cgh-crust)) 0 var(--cgh-screen-edge-gap),
-      transparent var(--cgh-screen-edge-gap) calc(100% - var(--cgh-screen-edge-gap)),
-      rgb(var(--cgh-crust)) calc(100% - var(--cgh-screen-edge-gap))),
-    linear-gradient(to bottom,
-      rgb(var(--cgh-crust)) 0 var(--cgh-screen-edge-gap),
-      transparent var(--cgh-screen-edge-gap) calc(100% - var(--cgh-screen-edge-gap)),
-      rgb(var(--cgh-crust)) calc(100% - var(--cgh-screen-edge-gap))),
-    linear-gradient(rgba(var(--cgh-crust), .34), rgba(var(--cgh-crust), .34)),
-    var(--cgh-wallpaper-image) !important;
-  background-size: 100vw 100vh, 100vw 100vh, 100vw 100vh, cover !important;
-  background-position: left top !important;
-  background-repeat: no-repeat !important;
-  background-attachment: fixed !important;
+  box-sizing: border-box !important;
+  width: calc(100% - var(--cgh-screen-edge-gap) - var(--cgh-screen-edge-gap)) !important;
+  height: calc(100dvh - var(--cgh-screen-edge-gap) - var(--cgh-screen-edge-gap)) !important;
+  min-height: 0 !important;
+  margin: var(--cgh-screen-edge-gap) !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(205, 214, 244, .18) !important;
+  border-radius: 16px !important;
+  background: rgba(var(--cgh-crust), .28) !important;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, .25) !important;
 }
 
 /* Exact current app-shell structural layers from the supplied DOM. */

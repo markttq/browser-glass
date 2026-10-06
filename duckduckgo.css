@@ -1,5 +1,6 @@
 /* Keep DuckDuckGo's result text and controls intact while showing the wallpaper. */
 body.body--serp {
+  --cgh-screen-edge-gap: 12px;
   --cgh-ddg-font: "JetBrainsMono Nerd Font", ui-monospace, Menlo, monospace;
   --sds-font-family-01: var(--cgh-ddg-font);
   --sds-font-family-monospace: var(--cgh-ddg-font);
@@ -16,32 +17,34 @@ body.body--serp {
   --theme-font-family-result-title: var(--cgh-ddg-font);
   --cgh-ddg-tint: rgba(255, 255, 255, .72);
   min-height: 100vh !important;
+  box-sizing: border-box !important;
+  padding: var(--cgh-screen-edge-gap) !important;
   font-family: var(--cgh-ddg-font) !important;
   background-color: #f2f2f2 !important;
-  background-image: none !important;
-  isolation: isolate;
-}
-
-body.body--serp::before {
-  content: "";
-  position: fixed;
-  inset: 12px;
-  z-index: -1;
-  pointer-events: none;
   background-image:
     linear-gradient(var(--cgh-ddg-tint), var(--cgh-ddg-tint)),
     var(--cgh-wallpaper-image) !important;
-  background-size: 100% 100%, cover !important;
+  background-size: 100vw 100vh, cover !important;
   background-position: left top, left top !important;
   background-repeat: no-repeat, no-repeat !important;
+  background-attachment: fixed, fixed !important;
 }
 
 body.body--serp :is(button, input, select, textarea) {
   font-family: var(--cgh-ddg-font) !important;
 }
 
-/* DuckDuckGo paints this full-page wrapper over the body background. */
-body.body--serp .site-wrapper,
+/* The result page sits inside the exposed wallpaper edge. */
+body.body--serp .site-wrapper {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-height: calc(100vh - var(--cgh-screen-edge-gap) - var(--cgh-screen-edge-gap)) !important;
+  border: 1px solid rgba(0, 0, 0, .12) !important;
+  border-radius: 16px !important;
+  background: rgba(255, 255, 255, .16) !important;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, .18) !important;
+}
+
 body.body--serp .footer,
 body.body--serp .footer--mobile {
   background-color: transparent !important;
@@ -50,6 +53,7 @@ body.body--serp .footer--mobile {
 
 body.body--serp .header-wrap {
   background-color: rgba(255, 255, 255, .82) !important;
+  border-radius: 16px 16px 0 0 !important;
 }
 
 html.set-theme--dark body.body--serp,
@@ -57,6 +61,13 @@ html.set-theme--terminal body.body--serp,
 html.dark-bg body.body--serp {
   --cgh-ddg-tint: rgba(17, 17, 27, .79);
   background-color: #11111b !important;
+}
+
+html.set-theme--dark body.body--serp .site-wrapper,
+html.set-theme--terminal body.body--serp .site-wrapper,
+html.dark-bg body.body--serp .site-wrapper {
+  border-color: rgba(205, 214, 244, .18) !important;
+  background: rgba(17, 17, 27, .28) !important;
 }
 
 html.set-theme--dark body.body--serp .header-wrap,
@@ -69,6 +80,11 @@ html.dark-bg body.body--serp .header-wrap {
   html.no-theme body.body--serp {
     --cgh-ddg-tint: rgba(17, 17, 27, .79);
     background-color: #11111b !important;
+  }
+
+  html.no-theme body.body--serp .site-wrapper {
+    border-color: rgba(205, 214, 244, .18) !important;
+    background: rgba(17, 17, 27, .28) !important;
   }
 
   html.no-theme body.body--serp .header-wrap {
