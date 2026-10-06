@@ -27,7 +27,7 @@ body.body--serp .header-wrap {
 html.set-theme--dark body.body--serp,
 html.set-theme--terminal body.body--serp,
 html.dark-bg body.body--serp {
-  --cgh-ddg-tint: rgba(17, 17, 27, .62);
+  --cgh-ddg-tint: rgba(17, 17, 27, .70);
   background-color: #11111b !important;
 }
 
@@ -39,7 +39,7 @@ html.dark-bg body.body--serp .header-wrap {
 
 @media (prefers-color-scheme: dark) {
   html.no-theme body.body--serp {
-    --cgh-ddg-tint: rgba(17, 17, 27, .62);
+    --cgh-ddg-tint: rgba(17, 17, 27, .70);
     background-color: #11111b !important;
   }
 
