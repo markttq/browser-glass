@@ -68,7 +68,7 @@ body {
   background-image:
     linear-gradient(rgba(var(--cgh-crust), .34), rgba(var(--cgh-crust), .34)),
     var(--cgh-wallpaper-image) !important;
-  background-size: 100vw 100vh, 100vw 100vh !important;
+  background-size: 100vw 100vh, cover !important;
   background-position: left top, left top !important;
   background-repeat: no-repeat, no-repeat !important;
   background-attachment: fixed, fixed !important;
@@ -81,7 +81,7 @@ body {
   background-image:
     linear-gradient(rgba(var(--cgh-crust), .34), rgba(var(--cgh-crust), .34)),
     var(--cgh-wallpaper-image) !important;
-  background-size: 100vw 100vh, 100vw 100vh !important;
+  background-size: 100vw 100vh, cover !important;
   background-position: left top, left top !important;
   background-repeat: no-repeat, no-repeat !important;
   background-attachment: fixed, fixed !important;
@@ -107,8 +107,8 @@ body {
 .MainContentSurface-EnuIYE {
   background: rgba(var(--cgh-mantle), .65) !important;
   background-image: none !important;
-  backdrop-filter: blur(30px) saturate(104%) !important;
-  -webkit-backdrop-filter: blur(30px) saturate(104%) !important;
+  backdrop-filter: blur(16px) saturate(104%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(104%) !important;
 }
 
 /* Inner scroll/content layers must not introduce another fill. */
@@ -132,8 +132,8 @@ body {
 #app-shell-sidebar {
   background: rgba(var(--cgh-crust), .22) !important;
   background-image: none !important;
-  backdrop-filter: blur(24px) saturate(102%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(102%) !important;
+  backdrop-filter: blur(12px) saturate(102%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(102%) !important;
   border-right: 1px solid rgba(205,214,244,.08) !important;
 }
 
@@ -152,8 +152,8 @@ body {
   background-image: none !important;
   border: 1px solid rgba(205,214,244,.11) !important;
   box-shadow: 0 12px 34px rgba(0,0,0,.30) !important;
-  backdrop-filter: blur(25px) saturate(106%) !important;
-  -webkit-backdrop-filter: blur(25px) saturate(106%) !important;
+  backdrop-filter: blur(12px) saturate(106%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(106%) !important;
 }
 
 /* Remove the bottom/footer band at the exact current composer layers. */

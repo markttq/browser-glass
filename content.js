@@ -2,7 +2,10 @@
   // v0.7.0: resolve the bundled wallpaper to an absolute extension URL.
   // This avoids page-relative URL resolution and works regardless of ChatGPT route.
   const wallpaperUrl = chrome.runtime.getURL("tahoe-day.jpg");
-  document.documentElement.style.setProperty("--cgh-wallpaper-image", `url("${wallpaperUrl}")`);
+  document.documentElement.style.setProperty(
+    "--cgh-wallpaper-image",
+    `url("${wallpaperUrl}")`,
+  );
 
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -21,22 +24,24 @@
 
   const STEALTH_ATTR = "data-chatgpt-thinking-helper-stealth";
 
-  // v0.6.8: no separate wallpaper DOM node. The wallpaper is hosted
-  // directly on ChatGPT's top-level app frame by glass.css.
-
-
-  // v0.6.6: wallpaper rendering is intentionally single-layer only.
-  // All legacy surface scanning, direct wallpaper painting, and overlay fallbacks
-  // were removed because their inline !important backgrounds caused seams.
-
-
   function captureFocusState() {
-    const active = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const active =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
     if (!active) return null;
 
-    const state = { active, selectionStart: null, selectionEnd: null, range: null };
+    const state = {
+      active,
+      selectionStart: null,
+      selectionEnd: null,
+      range: null,
+    };
 
-    if (active instanceof HTMLInputElement || active instanceof HTMLTextAreaElement) {
+    if (
+      active instanceof HTMLInputElement ||
+      active instanceof HTMLTextAreaElement
+    ) {
       state.selectionStart = active.selectionStart;
       state.selectionEnd = active.selectionEnd;
       return state;
@@ -46,7 +51,8 @@
       const sel = window.getSelection();
       if (sel && sel.rangeCount > 0) {
         const range = sel.getRangeAt(0);
-        if (active.contains(range.commonAncestorContainer)) state.range = range.cloneRange();
+        if (active.contains(range.commonAncestorContainer))
+          state.range = range.cloneRange();
       }
     }
 
@@ -56,12 +62,23 @@
   function restoreFocusState(state) {
     if (!state?.active?.isConnected) return;
 
-    try { state.active.focus({ preventScroll: true }); }
-    catch { state.active.focus(); }
+    try {
+      state.active.focus({ preventScroll: true });
+    } catch {
+      state.active.focus();
+    }
 
-    if (state.active instanceof HTMLInputElement || state.active instanceof HTMLTextAreaElement) {
+    if (
+      state.active instanceof HTMLInputElement ||
+      state.active instanceof HTMLTextAreaElement
+    ) {
       if (state.selectionStart != null && state.selectionEnd != null) {
-        try { state.active.setSelectionRange(state.selectionStart, state.selectionEnd); } catch {}
+        try {
+          state.active.setSelectionRange(
+            state.selectionStart,
+            state.selectionEnd,
+          );
+        } catch {}
       }
       return;
     }
@@ -87,7 +104,8 @@
   function getChatKey() {
     const match = location.pathname.match(/^\/c\/([^/]+)/);
     if (match) return `chat:${match[1]}`;
-    if (location.pathname === "/" || location.pathname === "") return "new-chat";
+    if (location.pathname === "/" || location.pathname === "")
+      return "new-chat";
     return location.pathname;
   }
 
@@ -96,7 +114,12 @@
     if (el.closest('[inert], [aria-hidden="true"]')) return false;
     const rect = el.getBoundingClientRect();
     const style = getComputedStyle(el);
-    return rect.width > 0 && rect.height > 0 && style.visibility !== "hidden" && style.display !== "none";
+    return (
+      rect.width > 0 &&
+      rect.height > 0 &&
+      style.visibility !== "hidden" &&
+      style.display !== "none"
+    );
   }
 
   function textOf(el) {
@@ -104,7 +127,6 @@
       el?.getAttribute?.("aria-label"),
       el?.getAttribute?.("data-testid"),
       el?.getAttribute?.("title"),
-      el?.innerText,
       el?.textContent,
     ]
       .filter(Boolean)
@@ -115,26 +137,40 @@
   }
 
   function findPickerTrigger() {
-    if (pickerTrigger?.isConnected && isVisible(pickerTrigger)) return pickerTrigger;
+    if (pickerTrigger?.isConnected && isVisible(pickerTrigger))
+      return pickerTrigger;
     pickerTrigger = null;
 
-    const candidates = [...document.querySelectorAll('button,[role="button"]')].filter(isVisible);
-    const effortWords = /\b(instant|low|medium|high|extra high|thinking|reasoning|effort)\b/i;
+    const candidates = document.querySelectorAll('button,[role="button"]');
+    const effortWords =
+      /\b(instant|low|medium|high|extra high|thinking|reasoning|effort)\b/i;
 
-    const direct = candidates.find((el) => effortWords.test(textOf(el)));
-    if (direct) return direct;
+    // Text checks are cheap; only measure layout for plausible triggers.
+    for (const candidate of candidates) {
+      if (effortWords.test(textOf(candidate)) && isVisible(candidate))
+        return candidate;
+    }
 
-    pickerTrigger = candidates.find((el) => {
-      const text = textOf(el);
-      return el.getAttribute("aria-haspopup") === "menu" && /gpt|model/.test(text);
-    }) || null;
+    for (const candidate of candidates) {
+      if (
+        candidate.getAttribute("aria-haspopup") === "menu" &&
+        /gpt|model/.test(textOf(candidate)) &&
+        isVisible(candidate)
+      ) {
+        pickerTrigger = candidate;
+        break;
+      }
+    }
     return pickerTrigger;
   }
 
   function getOpenReasoningControl() {
-    return [...document.querySelectorAll('[data-reasoning-slider="true"]')]
-      .filter((el) => !el.closest('[inert], [aria-hidden="true"]'))
-      .at(-1) || null;
+    const controls = document.querySelectorAll('[data-reasoning-slider="true"]');
+    for (let i = controls.length - 1; i >= 0; i--) {
+      if (!controls[i].closest('[inert], [aria-hidden="true"]'))
+        return controls[i];
+    }
+    return null;
   }
 
   function getSliderState(control) {
@@ -211,7 +247,13 @@
   }
 
   function dispatchArrow(target, key) {
-    const init = { key, code: key, bubbles: true, cancelable: true, composed: true };
+    const init = {
+      key,
+      code: key,
+      bubbles: true,
+      cancelable: true,
+      composed: true,
+    };
     target.dispatchEvent(new KeyboardEvent("keydown", init));
     target.dispatchEvent(new KeyboardEvent("keyup", init));
   }
@@ -225,7 +267,11 @@
       const key = wanted > state.value ? "ArrowRight" : "ArrowLeft";
       const before = state.value;
 
-      try { control.focus({ preventScroll: true }); } catch { control.focus(); }
+      try {
+        control.focus({ preventScroll: true });
+      } catch {
+        control.focus();
+      }
       dispatchArrow(control, key);
       await Promise.resolve();
       if (getSliderState(control)?.value !== before) continue;
@@ -249,11 +295,12 @@
     const state = getSliderState(control);
     if (!state) return false;
 
-    const root = [...control.querySelectorAll('[data-orientation="horizontal"]')]
-      .find((el) => el !== state.slider && el.contains(state.slider));
+    const root = [
+      ...control.querySelectorAll('[data-orientation="horizontal"]'),
+    ].find((el) => el !== state.slider && el.contains(state.slider));
     if (!root) return false;
 
-    const ticks = [...root.querySelectorAll('[data-selected]')];
+    const ticks = [...root.querySelectorAll("[data-selected]")];
     let x;
     let y;
 
@@ -282,9 +329,13 @@
       button: 0,
     };
 
-    target.dispatchEvent(new PointerEvent("pointerdown", { ...base, buttons: 1 }));
+    target.dispatchEvent(
+      new PointerEvent("pointerdown", { ...base, buttons: 1 }),
+    );
     target.dispatchEvent(new MouseEvent("mousedown", { ...base, buttons: 1 }));
-    target.dispatchEvent(new PointerEvent("pointerup", { ...base, buttons: 0 }));
+    target.dispatchEvent(
+      new PointerEvent("pointerup", { ...base, buttons: 0 }),
+    );
     target.dispatchEvent(new MouseEvent("mouseup", { ...base, buttons: 0 }));
     target.dispatchEvent(new MouseEvent("click", { ...base, buttons: 0 }));
 
@@ -305,7 +356,13 @@
   }
 
   function dispatchEscape(target) {
-    const init = { key: "Escape", code: "Escape", bubbles: true, cancelable: true, composed: true };
+    const init = {
+      key: "Escape",
+      code: "Escape",
+      bubbles: true,
+      cancelable: true,
+      composed: true,
+    };
     target?.dispatchEvent?.(new KeyboardEvent("keydown", init));
     target?.dispatchEvent?.(new KeyboardEvent("keyup", init));
   }
@@ -319,7 +376,10 @@
 
     // Fast path: Radix normally flips state synchronously. One frame is enough
     // to prevent a closing-animation flash before stealth mode is removed.
-    if (!pickerIsOpen(control) || exactTrigger?.getAttribute("aria-expanded") === "false") {
+    if (
+      !pickerIsOpen(control) ||
+      exactTrigger?.getAttribute("aria-expanded") === "false"
+    ) {
       await new Promise((resolve) => requestAnimationFrame(resolve));
       return true;
     }
@@ -337,7 +397,8 @@
     }
 
     exactTrigger = getExactTriggerFromControl(control) || exactTrigger;
-    if (exactTrigger?.getAttribute("aria-expanded") === "true") exactTrigger.click();
+    if (exactTrigger?.getAttribute("aria-expanded") === "true")
+      exactTrigger.click();
     await new Promise((resolve) => requestAnimationFrame(resolve));
     return !pickerIsOpen(control);
   }
@@ -380,7 +441,10 @@
       // owns the first three: Instant, Medium, High. If the user manually
       // selected XHigh/Pro, Shift+Tab returns to Instant instead of cycling
       // through those manual-only levels.
-      const shortcutMax = Math.min(state.max, state.min + SHORTCUT_LEVEL_COUNT - 1);
+      const shortcutMax = Math.min(
+        state.max,
+        state.min + SHORTCUT_LEVEL_COUNT - 1,
+      );
       const next =
         state.value < state.min || state.value >= shortcutMax
           ? state.min
@@ -412,34 +476,49 @@
     }, RESET_DELAY_MS);
   }
 
-  document.addEventListener("keydown", (event) => {
-    if (
-      event.key === "Tab" && event.shiftKey &&
-      !event.ctrlKey && !event.altKey && !event.metaKey
-    ) {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      cycleReasoning();
-    }
-  }, true);
+  document.addEventListener(
+    "keydown",
+    (event) => {
+      if (
+        event.key === "Tab" &&
+        event.shiftKey &&
+        !event.ctrlKey &&
+        !event.altKey &&
+        !event.metaKey
+      ) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        cycleReasoning();
+      }
+    },
+    true,
+  );
 
-  document.addEventListener("click", (event) => {
-    const el = event.target instanceof Element
-      ? event.target.closest('button,a,[role="button"]')
-      : null;
-    if (!el) return;
+  document.addEventListener(
+    "click",
+    (event) => {
+      const el =
+        event.target instanceof Element
+          ? event.target.closest('button,a,[role="button"]')
+          : null;
+      if (!el) return;
 
-    const aria = (el.getAttribute("aria-label") || "").trim().toLowerCase();
-    const text = (el.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
-    if (aria === "new chat" || text === "new chat") scheduleReset();
+      const aria = (el.getAttribute("aria-label") || "").trim().toLowerCase();
+      const text = (el.textContent || "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .toLowerCase();
+      if (aria === "new chat" || text === "new chat") scheduleReset();
 
-    if (el instanceof HTMLAnchorElement) {
-      try {
-        const url = new URL(el.href, location.href);
-        if (url.origin === location.origin) setTimeout(checkNavigation, 0);
-      } catch {}
-    }
-  }, true);
+      if (el instanceof HTMLAnchorElement) {
+        try {
+          const url = new URL(el.href, location.href);
+          if (url.origin === location.origin) setTimeout(checkNavigation, 0);
+        } catch {}
+      }
+    },
+    true,
+  );
 
   function queueNavigationCheck() {
     if (navigationCheckQueued) return;
@@ -483,7 +562,10 @@
   addEventListener("pageshow", checkNavigation);
 
   if (window.navigation?.addEventListener) {
-    window.navigation.addEventListener("currententrychange", queueNavigationCheck);
+    window.navigation.addEventListener(
+      "currententrychange",
+      queueNavigationCheck,
+    );
   }
 
   // Fallback for SPA route changes that do not emit observable navigation
