@@ -15,7 +15,7 @@ Version 0.8.15.
 - Uses static extension CSS to hide the picker while the shortcut runs.
 - Removes the permanent document-wide mutation observer and checks navigation events with a low-frequency SPA fallback instead.
 - Deduplicates chat-reset timers and retains the first `/` → `/c/<id>` no-reset behavior.
-- Starts at `document_idle`, matching the stable v0.8.1 load behavior.
+- Starts the wallpaper and glass CSS at `document_start`, so the image can load while the page is still loading. ChatGPT reasoning shortcuts keep their stable `document_idle` startup timing.
 
 ## Install in Vivaldi
 
@@ -25,3 +25,7 @@ Version 0.8.15.
 4. Refresh ChatGPT and DuckDuckGo tabs after loading the extension.
 
 Shortcut: **Shift+Tab** cycles Instant → Medium → High → Instant. XHigh/Pro remain manual-only.
+
+## Verify wallpaper startup
+
+Run `node --test tests/wallpaper-startup.test.cjs` to check early wallpaper initialization on all supported sites and preserve the ChatGPT shortcut startup timing.

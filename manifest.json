@@ -10,13 +10,22 @@
         "https://chat.openai.com/*"
       ],
       "js": [
-        "wallpaper.js",
-        "content.js"
+        "wallpaper.js"
       ],
-      "run_at": "document_idle",
+      "run_at": "document_start",
       "css": [
         "glass.css"
       ]
+    },
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
     },
     {
       "matches": [
