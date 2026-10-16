@@ -1,31 +1,49 @@
 # Browser Glass
 
-Tahoe wallpaper and glass styling for ChatGPT and DuckDuckGo, with ChatGPT reasoning shortcuts.
+Tahoe wallpaper and glass styling for ChatGPT, DuckDuckGo, and YouTube, with ChatGPT reasoning shortcuts.
 
-Version 0.8.15.
+Version 0.8.23.
 
-- Preserves the working Tahoe wallpaper fallback and glass appearance.
-- Replaces the large bottom-right foreground boulder with matching lake water while retaining the original image outside the edit mask.
-- Keeps the wallpaper proportional when resizing: fullscreen and windows at least half the display width use the top left; narrower windows use the top right. Updates automatically on resize for ChatGPT and DuckDuckGo.
-- Crops 12px from each wallpaper edge on ChatGPT and DuckDuckGo without moving the page content.
-- Shows the Tahoe wallpaper behind DuckDuckGo search results with a tint that follows its light or dark theme and uses the terminal's JetBrainsMono Nerd Font.
-- Uses the Catppuccin mantle tint at 65% opacity and 16px blur for the main pane.
-- Applies a high-contrast selection highlight across the main reading pane.
-- Keeps the tested picker discovery, focus restoration, and Instant → Medium → High → Instant shortcut cycle.
+- Uses a still captured from the desktop's Tahoe wallpaper, sized to the display width.
+- Aligns the wallpaper with the window's desktop position, with browser-frame compensation and automatic move/resize updates.
+- Gives ChatGPT a glass appearance with Catppuccin colors, blur, and high-contrast text selection.
+- Follows DuckDuckGo's light or dark theme and uses JetBrainsMono Nerd Font for search results.
+- Gives YouTube a wallpaper background and blurred glass header and sidebar, following its light or dark theme.
+- Reveals the wallpaper around YouTube's watch-page player and disables its ambient background glow.
+- Adds a manual Shift+Tab reasoning shortcut to ChatGPT, preserving picker discovery and focus restoration. It does no work until you use the shortcut.
 - Uses static extension CSS to hide the picker while the shortcut runs.
-- Removes the permanent document-wide mutation observer and checks navigation events with a low-frequency SPA fallback instead.
-- Deduplicates chat-reset timers and retains the first `/` → `/c/<id>` no-reset behavior.
 - Starts the wallpaper and glass CSS at `document_start`, so the image can load while the page is still loading. ChatGPT reasoning shortcuts keep their stable `document_idle` startup timing.
+- Loads the wallpaper directly from extension CSS, pauses alignment polling in hidden tabs, and updates styles only when window geometry changes.
 
 ## Install in Vivaldi
 
 1. Open `vivaldi://extensions`.
 2. Enable **Developer mode**.
 3. Choose **Load unpacked** and select this folder.
-4. Refresh ChatGPT and DuckDuckGo tabs after loading the extension.
+4. Refresh ChatGPT, DuckDuckGo, and YouTube tabs after loading the extension.
 
 Shortcut: **Shift+Tab** cycles Instant → Medium → High → Instant. XHigh/Pro remain manual-only.
 
 ## Verify wallpaper startup
 
-Run `node --test tests/wallpaper-startup.test.cjs` to check early wallpaper initialization on all supported sites and preserve the ChatGPT shortcut startup timing.
+Run `node --test tests/*.test.cjs` to check early wallpaper initialization on all supported sites, hidden-tab polling, window alignment, and idle shortcut behavior and ChatGPT shortcut startup timing.
+
+## Match the Mac desktop wallpaper
+
+The Mac setup script and a copy of this wallpaper live in the sibling
+`personal/suitcase` repository. From that checkout, run this in Terminal
+in your logged-in desktop session:
+
+```sh
+./set-mac-wallpaper.sh
+```
+
+The script sets external monitors in the current desktop session to the
+extension's exact `tahoe-day.jpg` image with centered **Fill Screen** scaling.
+The wallpaper is bundled in Suitcase, so the Mac does not need to have
+Tahoe's wallpaper installed or download it separately. The script copies it to
+`~/Library/Application Support/Browser Glass/tahoe-day.jpg` so the desktop image
+keeps working if the repository moves. It requires Apple's Swift command-line
+tools. Run it again on other Spaces if needed,
+or after connecting another display. Load Browser Glass from this same folder
+in Vivaldi so the browser and desktop use the same image.

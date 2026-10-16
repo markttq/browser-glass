@@ -1,0 +1,72 @@
+/* Follow YouTube's theme while leaving video surfaces and controls intact. */
+:root {
+  --cgh-site-tint: rgba(255, 255, 255, .72);
+  --cgh-youtube-glass: rgba(255, 255, 255, .78);
+}
+
+html[dark] {
+  --cgh-site-tint: rgba(17, 17, 27, .79);
+  --cgh-youtube-glass: rgba(17, 17, 27, .78);
+}
+
+/* These page shells otherwise cover the body's desktop-aligned wallpaper. */
+ytd-app,
+ytd-page-manager,
+ytd-browse,
+ytd-search,
+ytd-watch-flexy.watch-root-element,
+ytd-shorts,
+ytd-two-column-browse-results-renderer,
+ytd-rich-grid-renderer,
+ytd-mini-guide-renderer,
+#background.ytd-masthead {
+  background: transparent !important;
+}
+
+/* Watch-page layout rules can paint individual columns and pseudo-elements. */
+ytd-watch-flexy.watch-root-element::before,
+ytd-watch-flexy.watch-root-element::after,
+ytd-watch-flexy.watch-root-element :is(
+  #columns,
+  #primary,
+  #primary-inner,
+  #secondary,
+  #secondary-inner,
+  #below,
+  #full-bleed-container,
+  #player-full-bleed-container
+) {
+  background: transparent !important;
+}
+
+/* Ambient mode spreads a video-colored canvas across the watch background. */
+ytd-watch-flexy.watch-root-element #cinematics-container,
+ytd-watch-flexy.watch-root-element #cinematics-full-bleed-container {
+  display: none !important;
+}
+
+ytd-watch-metadata #description,
+ytd-engagement-panel-section-list-renderer {
+  background: var(--cgh-youtube-glass) !important;
+}
+
+ytd-masthead,
+#chips-wrapper.ytd-feed-filter-chip-bar-renderer,
+#chips-wrapper.ytd-filter-chip-bar-renderer,
+#contentContainer.tp-yt-app-drawer,
+ytd-playlist-panel-renderer #container {
+  background: var(--cgh-youtube-glass) !important;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}
+
+ytd-guide-renderer,
+ytd-guide-section-renderer,
+ytd-guide-collapsible-section-entry-renderer {
+  background-color: transparent !important;
+}
+
+/* The expanded guide is already backed by the drawer's glass surface. */
+ytd-guide-renderer {
+  --yt-spec-base-background: transparent;
+}

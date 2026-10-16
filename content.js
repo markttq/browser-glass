@@ -4,15 +4,8 @@
   // Shortcut-owned levels only: Instant (0) -> Medium (1) -> High (2).
   // Higher levels remain manual-only.
   const SHORTCUT_LEVEL_COUNT = 3;
-  const RESET_DELAY_MS = 250;
-  const RESET_RETRY_DELAY_MS = 700;
-
   let busy = false;
   let pickerTrigger = null;
-  let lastChatKey = getChatKey();
-  let navigationCheckQueued = false;
-  let resetTimer = 0;
-  let resetRetryTimer = 0;
 
   const STEALTH_ATTR = "data-chatgpt-thinking-helper-stealth";
 
@@ -93,14 +86,6 @@
     document.documentElement.removeAttribute(STEALTH_ATTR);
   }
 
-  function getChatKey() {
-    const match = location.pathname.match(/^\/c\/([^/]+)/);
-    if (match) return `chat:${match[1]}`;
-    if (location.pathname === "/" || location.pathname === "")
-      return "new-chat";
-    return location.pathname;
-  }
-
   function isVisible(el) {
     if (!(el instanceof HTMLElement)) return false;
     if (el.closest('[inert], [aria-hidden="true"]')) return false;
@@ -139,8 +124,10 @@
 
     // Text checks are cheap; only measure layout for plausible triggers.
     for (const candidate of candidates) {
-      if (effortWords.test(textOf(candidate)) && isVisible(candidate))
+      if (effortWords.test(textOf(candidate)) && isVisible(candidate)) {
+        pickerTrigger = candidate;
         return candidate;
+      }
     }
 
     for (const candidate of candidates) {
@@ -446,28 +433,6 @@
     });
   }
 
-  async function resetToInstant() {
-    return withStealthPicker(async (control) => {
-      const state = getSliderState(control);
-      if (!state) return false;
-      return setReasoningValue(control, state.min);
-    });
-  }
-
-  function scheduleReset() {
-    if (resetTimer) clearTimeout(resetTimer);
-    if (resetRetryTimer) clearTimeout(resetRetryTimer);
-
-    resetTimer = setTimeout(async () => {
-      resetTimer = 0;
-      if (await resetToInstant()) return;
-      resetRetryTimer = setTimeout(() => {
-        resetRetryTimer = 0;
-        resetToInstant();
-      }, RESET_RETRY_DELAY_MS);
-    }, RESET_DELAY_MS);
-  }
-
   document.addEventListener(
     "keydown",
     (event) => {
@@ -486,83 +451,4 @@
     true,
   );
 
-  document.addEventListener(
-    "click",
-    (event) => {
-      const el =
-        event.target instanceof Element
-          ? event.target.closest('button,a,[role="button"]')
-          : null;
-      if (!el) return;
-
-      const aria = (el.getAttribute("aria-label") || "").trim().toLowerCase();
-      const text = (el.textContent || "")
-        .replace(/\s+/g, " ")
-        .trim()
-        .toLowerCase();
-      if (aria === "new chat" || text === "new chat") scheduleReset();
-
-      if (el instanceof HTMLAnchorElement) {
-        try {
-          const url = new URL(el.href, location.href);
-          if (url.origin === location.origin) setTimeout(checkNavigation, 0);
-        } catch {}
-      }
-    },
-    true,
-  );
-
-  function queueNavigationCheck() {
-    if (navigationCheckQueued) return;
-    navigationCheckQueued = true;
-
-    queueMicrotask(() => {
-      navigationCheckQueued = false;
-      checkNavigation();
-    });
-  }
-
-  function patchHistoryMethod(method) {
-    const original = history[method];
-    if (typeof original !== "function") return;
-
-    history[method] = function (...args) {
-      const result = original.apply(this, args);
-      queueNavigationCheck();
-      return result;
-    };
-  }
-
-  function checkNavigation() {
-    if (location.pathname === observedPathname) return;
-    observedPathname = location.pathname;
-
-    const key = getChatKey();
-    if (key === lastChatKey) return;
-
-    const previous = lastChatKey;
-    lastChatKey = key;
-    if (previous === "new-chat" && key.startsWith("chat:")) return;
-    scheduleReset();
-  }
-
-  patchHistoryMethod("pushState");
-  patchHistoryMethod("replaceState");
-
-  addEventListener("popstate", checkNavigation);
-  addEventListener("hashchange", checkNavigation);
-  addEventListener("pageshow", checkNavigation);
-
-  if (window.navigation?.addEventListener) {
-    window.navigation.addEventListener(
-      "currententrychange",
-      queueNavigationCheck,
-    );
-  }
-
-  // Fallback for SPA route changes that do not emit observable navigation
-  // events in the extension's isolated world. Unlike a subtree observer this
-  // runs at a fixed low frequency instead of on every streamed DOM update.
-  let observedPathname = location.pathname;
-  setInterval(checkNavigation, 500);
 })();

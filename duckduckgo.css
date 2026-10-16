@@ -1,10 +1,5 @@
 /* Keep DuckDuckGo's result text and controls intact while showing the wallpaper. */
 body.body--serp {
-  --cgh-wallpaper-crop: 12px;
-  --cgh-wallpaper-width: max(
-    calc(100vw + 2 * var(--cgh-wallpaper-crop)),
-    calc((100vh + 2 * var(--cgh-wallpaper-crop)) * 16 / 9)
-  );
   --cgh-ddg-font: "JetBrainsMono Nerd Font", ui-monospace, Menlo, monospace;
   --sds-font-family-01: var(--cgh-ddg-font);
   --sds-font-family-monospace: var(--cgh-ddg-font);
@@ -25,9 +20,9 @@ body.body--serp {
   background-color: #f2f2f2 !important;
   background-image:
     linear-gradient(var(--cgh-ddg-tint), var(--cgh-ddg-tint)),
-    var(--cgh-wallpaper-image) !important;
-  background-size: 100vw 100vh, var(--cgh-wallpaper-width) auto !important;
-  background-position: left top, var(--cgh-wallpaper-position, left calc(-1 * var(--cgh-wallpaper-crop)) top calc(-1 * var(--cgh-wallpaper-crop))) !important;
+    url("tahoe-day.jpg") !important;
+  background-size: 100vw 100vh, var(--cgh-wallpaper-width, 100vw) auto !important;
+  background-position: left top, var(--cgh-wallpaper-position, left top) !important;
   background-repeat: no-repeat, no-repeat !important;
   background-attachment: fixed, fixed !important;
 }
