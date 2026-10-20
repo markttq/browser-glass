@@ -51,7 +51,10 @@ for (const origin of wallpaperOrigins) {
     }
     const styles = entries.filter(entry => entry.run_at === 'document_start')
       .flatMap(entry => entry.css || []).map(file => fs.readFileSync(path.join(root, file), 'utf8')).join('\n');
-    assert.match(styles, /url\("tahoe-day\.jpg"\)/, 'CSS must load the wallpaper without waiting for JavaScript');
+    assert.match(styles, /url\("chrome-extension:\/\/__MSG_@@extension_id__\/tahoe-day\.jpg"\)/,
+      'CSS must load the wallpaper at document_start from the extension rather than the page origin');
+    assert.doesNotMatch(styles, /url\("tahoe-day\.jpg"\)/,
+      'relative wallpaper URLs request the image from the website instead of the extension');
     assert.equal(f.properties.get('--cgh-wallpaper-width'), '2560px');
     assert.equal(f.properties.get('--cgh-wallpaper-position'), '-88px -132px');
   });

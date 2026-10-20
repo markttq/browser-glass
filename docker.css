@@ -1,0 +1,36 @@
+/* The marketing site mixes light and dark sections on the same page. */
+:root {
+  --cgh-site-tint: rgba(255, 255, 255, .34);
+  --cgh-docker-glass: rgba(255, 255, 255, .78);
+}
+
+body :is(.scheme__light, .scheme__white, .scheme__default) {
+  --cgh-docker-glass: rgba(255, 255, 255, .78);
+}
+
+body :is(.scheme__dark, .scheme__dark-blue) {
+  --cgh-docker-glass: rgba(24, 24, 37, .86);
+}
+
+/* Reveal the fixed wallpaper through the page's full-width section fills. */
+.wp-site-blocks,
+.wp-site-blocks > main,
+.entry-content {
+  background: transparent !important;
+}
+
+.entry-content > :is(.organism, [class*="wp-block-ponyo-layout-"]) {
+  background: var(--cgh-docker-glass) !important;
+}
+
+/* Keep navigation and menus readable as content scrolls underneath them. */
+.site-header,
+.site-header .mega-menu-container,
+.site-footer {
+  background: var(--cgh-docker-glass) !important;
+  backdrop-filter: blur(16px) saturate(104%);
+}
+
+.site-footer > .organism {
+  background: transparent !important;
+}

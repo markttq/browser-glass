@@ -1,4 +1,5 @@
-/* Shared Tahoe framing for site-specific glass styles. */
+/* Shared Tahoe framing. Use an extension URL: relative content-script CSS URLs
+   resolve against the page, including nested paths such as /get-started/. */
 :root {
   --cgh-wallpaper-width: max(100vw, calc(100vh * 16 / 9));
   --cgh-site-tint: rgba(255, 255, 255, .78);
@@ -8,7 +9,7 @@ body {
   min-height: 100vh !important;
   background-image:
     linear-gradient(var(--cgh-site-tint), var(--cgh-site-tint)),
-    url("tahoe-day.jpg") !important;
+    url("chrome-extension://__MSG_@@extension_id__/tahoe-day.jpg") !important;
   background-size: 100vw 100vh, var(--cgh-wallpaper-width) auto !important;
   background-position: left top, var(--cgh-wallpaper-position, left top) !important;
   background-repeat: no-repeat, no-repeat !important;

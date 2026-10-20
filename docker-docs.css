@@ -1,0 +1,41 @@
+/* Docker Docs sets .dark on <html> when its theme changes. */
+:root {
+  --cgh-site-tint: rgba(255, 255, 255, .34);
+  --cgh-docker-glass: rgba(255, 255, 255, .65);
+  --cgh-docker-panel: rgba(255, 255, 255, .82);
+}
+
+html.dark {
+  --cgh-site-tint: rgba(17, 17, 27, .34);
+  --cgh-docker-glass: rgba(24, 24, 37, .65);
+  --cgh-docker-panel: rgba(24, 24, 37, .86);
+}
+
+/* One glass plane for the article; retain native text and syntax colors. */
+body main [data-pagefind-body],
+body main > .bg-background-toc,
+body > footer {
+  background: var(--cgh-docker-glass) !important;
+  backdrop-filter: blur(16px) saturate(104%);
+}
+
+body main > .bg-background-toc .bg-background-toc,
+body > footer > div {
+  background: transparent !important;
+}
+
+/* Keep Docker's white header controls legible on a blue glass surface. */
+body > header {
+  background: rgba(13, 77, 242, .82) !important;
+  backdrop-filter: blur(16px);
+}
+
+body main :is(.card, .download-links),
+#gordon-chat {
+  background: var(--cgh-docker-panel) !important;
+}
+
+body main ::selection {
+  background: #89b4fa !important;
+  color: #11111b !important;
+}

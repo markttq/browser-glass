@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Browser Glass",
-  "version": "0.8.23",
-  "description": "Tahoe wallpaper and glass for ChatGPT, DuckDuckGo search, and YouTube, with ChatGPT reasoning shortcuts.",
+  "version": "0.8.25",
+  "description": "Tahoe wallpaper and glass for ChatGPT, DuckDuckGo, YouTube, and Docker, with ChatGPT reasoning shortcuts.",
   "content_scripts": [
     {
       "matches": [
@@ -52,6 +52,33 @@
         "wallpaper-sites.css",
         "youtube.css"
       ]
+    },
+    {
+      "matches": [
+        "https://docs.docker.com/*"
+      ],
+      "js": [
+        "wallpaper.js"
+      ],
+      "run_at": "document_start",
+      "css": [
+        "wallpaper-sites.css",
+        "docker-docs.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://docker.com/*",
+        "https://www.docker.com/*"
+      ],
+      "js": [
+        "wallpaper.js"
+      ],
+      "run_at": "document_start",
+      "css": [
+        "wallpaper-sites.css",
+        "docker.css"
+      ]
     }
   ],
   "web_accessible_resources": [
@@ -64,7 +91,10 @@
         "https://chat.openai.com/*",
         "https://duckduckgo.com/*",
         "https://www.youtube.com/*",
-        "https://youtube.com/*"
+        "https://youtube.com/*",
+        "https://docs.docker.com/*",
+        "https://docker.com/*",
+        "https://www.docker.com/*"
       ]
     }
   ]
