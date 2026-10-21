@@ -23,6 +23,7 @@ function fixture({ hidden = false, hasRoot = true } = {}) {
   let observer;
   const context = {
     document,
+    chrome: { runtime: { getURL: file => `chrome-extension://test-extension/${file}` } },
     window: {
       outerWidth: 1440, outerHeight: 1000, innerWidth: 1424, innerHeight: 900,
       screenX: 80, screenY: 40,
@@ -55,6 +56,9 @@ for (const origin of wallpaperOrigins) {
       'CSS must load the wallpaper at document_start from the extension rather than the page origin');
     assert.doesNotMatch(styles, /url\("tahoe-day\.jpg"\)/,
       'relative wallpaper URLs request the image from the website instead of the extension');
+    assert.equal(f.properties.get('--cgh-wallpaper-image'),
+      'url("chrome-extension://test-extension/tahoe-day.jpg")',
+      'runtime wallpaper URL must use the extension origin');
     assert.equal(f.properties.get('--cgh-wallpaper-width'), '2560px');
     assert.equal(f.properties.get('--cgh-wallpaper-position'), '-88px -132px');
   });

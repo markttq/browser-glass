@@ -54,6 +54,12 @@
   }
 
   function initializeWallpaper() {
+    // Content-script CSS resolves relative image URLs against the host page.
+    // Use the extension URL so every supported site loads the bundled image.
+    document.documentElement.style.setProperty(
+      "--cgh-wallpaper-image",
+      `url("${chrome.runtime.getURL("tahoe-day.jpg")}")`,
+    );
     window.addEventListener("resize", updateWallpaperPosition);
     window.addEventListener("pageshow", syncVisibility);
     window.addEventListener("pagehide", () => {

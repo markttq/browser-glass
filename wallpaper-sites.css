@@ -9,7 +9,7 @@ body {
   min-height: 100vh !important;
   background-image:
     linear-gradient(var(--cgh-site-tint), var(--cgh-site-tint)),
-    url("chrome-extension://__MSG_@@extension_id__/tahoe-day.jpg") !important;
+    var(--cgh-wallpaper-image, url("chrome-extension://__MSG_@@extension_id__/tahoe-day.jpg")) !important;
   background-size: 100vw 100vh, var(--cgh-wallpaper-width) auto !important;
   background-position: left top, var(--cgh-wallpaper-position, left top) !important;
   background-repeat: no-repeat, no-repeat !important;

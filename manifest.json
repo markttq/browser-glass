@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Browser Glass",
-  "version": "0.8.25",
+  "version": "0.8.26",
   "description": "Tahoe wallpaper and glass for ChatGPT, DuckDuckGo, YouTube, and Docker, with ChatGPT reasoning shortcuts.",
   "content_scripts": [
     {

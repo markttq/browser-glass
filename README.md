@@ -2,7 +2,7 @@
 
 Tahoe wallpaper and glass styling for ChatGPT, DuckDuckGo, YouTube, and Docker, with ChatGPT reasoning shortcuts.
 
-Version 0.8.25.
+Version 0.8.26.
 
 - Uses a still captured from the desktop's Tahoe wallpaper, sized to the display width.
 - Aligns the wallpaper with the window's desktop position, with browser-frame compensation and automatic move/resize updates.
@@ -14,7 +14,7 @@ Version 0.8.25.
 - Adds a manual Shift+Tab reasoning shortcut to ChatGPT, preserving picker discovery and focus restoration. It does no work until you use the shortcut.
 - Uses static extension CSS to hide the picker while the shortcut runs.
 - Starts the wallpaper and glass CSS at `document_start`, so the image can load while the page is still loading. ChatGPT reasoning shortcuts keep their stable `document_idle` startup timing.
-- Loads the wallpaper directly from extension CSS, pauses alignment polling in hidden tabs, and updates styles only when window geometry changes.
+- Loads the wallpaper directly from extension CSS with a runtime extension URL override, pauses alignment polling in hidden tabs, and updates styles only when window geometry changes.
 
 ## Install in Vivaldi
 
