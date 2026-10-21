@@ -1,0 +1,17 @@
+/* Keep Google's text colors and cards; reveal the wallpaper below its frame. */
+#main,
+#cnt,
+#rcnt,
+#center_col,
+#search,
+#rso,
+#sfooter {
+  background-color: transparent !important;
+}
+
+#searchform,
+#appbar,
+#hdtb,
+#fbar {
+  background-color: var(--cgh-site-tint) !important;
+}

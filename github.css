@@ -1,0 +1,29 @@
+/* Follow GitHub's selected theme without changing Primer's color variables. */
+:root {
+  --cgh-site-tint: rgba(255, 255, 255, .88);
+}
+
+html[data-color-mode="dark"] {
+  --cgh-site-tint: rgba(17, 17, 27, .88);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-color-mode="auto"] {
+    --cgh-site-tint: rgba(17, 17, 27, .88);
+  }
+}
+
+/* Paint the page frame itself, including GitHub's React navigation frame.
+   Fixed backgrounds align with the body's wallpaper without stacking tints. */
+.application-main,
+.application-main > main,
+.application-main react-app {
+  background-color: transparent !important;
+  background-image:
+    linear-gradient(var(--cgh-site-tint), var(--cgh-site-tint)),
+    var(--cgh-wallpaper-image) !important;
+  background-size: 100vw 100vh, var(--cgh-wallpaper-width) auto !important;
+  background-position: left top, var(--cgh-wallpaper-position, left calc(-1 * var(--cgh-wallpaper-crop)) top calc(-1 * var(--cgh-wallpaper-crop))) !important;
+  background-repeat: no-repeat, no-repeat !important;
+  background-attachment: fixed, fixed !important;
+}
