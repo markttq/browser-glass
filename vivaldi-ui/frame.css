@@ -1,0 +1,4 @@
+/* Vivaldi 8.2: remove the colored surround in the auto-hide layout. */
+#browser.auto-hide.unified-ui {
+  padding: 0;
+}

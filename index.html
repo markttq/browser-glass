@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html lang="en-AU" data-flavour="rosepine-moon">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>New Tab</title>
+    <link rel="stylesheet" href="wallpaper-sites.css" />
+    <link rel="stylesheet" href="newtab.css" />
+    <script src="wallpaper.js"></script>
+  </head>
+  <body>
+
+    <main class="lesson" id="lesson" hidden>
+      <div class="lesson-copy">
+        <h1 class="claim" id="claim"></h1>
+        <p class="body" id="body"></p>
+        <p class="source">
+          <cite id="book"></cite><span class="author" id="author"></span>
+        </p>
+      </div>
+    </main>
+
+    <p class="empty-state" id="empty-state">Your daily reading principle will appear here after running build-lessons.py.</p>
+    <div class="controls">
+      <button class="ctl" id="rotate" disabled title="Next lesson (n)">next</button>
+      <button class="ctl" id="flavour" title="Change theme"></button>
+    </div>
+
+    <script src="newtab.js"></script>
+  </body>
+</html>

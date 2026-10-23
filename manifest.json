@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Browser Glass",
-  "version": "0.8.28",
-  "description": "Tahoe wallpaper and glass for ChatGPT, DuckDuckGo, YouTube, Docker, and GitHub, with ChatGPT reasoning shortcuts.",
+  "version": "0.9.0",
+  "description": "Tahoe wallpaper and glass across your browser, with Markentum daily reading lessons on the new tab page.",
   "content_scripts": [
     {
       "matches": [
@@ -111,5 +111,17 @@
         "https://github.com/*"
       ]
     }
-  ]
+  ],
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
 }

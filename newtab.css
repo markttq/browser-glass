@@ -1,0 +1,249 @@
+:root[data-flavour="rosepine-moon"] {
+  --frame: #232136;
+  --text: #e0def4;
+  --accent: #ea9a97; /* rose - Work */
+}
+:root[data-flavour="frappe"] {
+  --frame: #303446;
+  --text: #c6d0f5;
+  --accent: #ca9ee6; /* mauve - Personal */
+}
+:root[data-flavour="macchiato"] {
+  --frame: #24273a;
+  --text: #cad3f5;
+  --accent: #c6a0f6;
+}
+:root[data-flavour="mocha"] {
+  --frame: #1e1e2e;
+  --text: #cdd6f4;
+  --accent: #cba6f7;
+}
+
+:root {
+  /* One face everywhere: JetBrainsMono Nerd Font, exactly what
+     ghostty/dot-config/ghostty/config sets as font-family. The fallbacks only
+     matter on a machine where the Brewfile cask has not been installed.
+
+     Mono for a paragraph of book prose is not the obvious choice, and it costs
+     something - a monospaced page fits roughly a third fewer characters per
+     line at the same point size, so the measure below is set in ch rather than
+     rem and the body runs at a looser line-height than a proportional face
+     would need. What it buys is that the new tab looks like the terminal and
+     the editor rather than like a third application. */
+  --mono:
+    "JetBrainsMono Nerd Font", "JetBrains Mono", ui-monospace, SFMono-Regular,
+    Menlo, monospace;
+
+  /* Applied to the claim, the body and the byline, so the three keep their
+     ratios. The corner credit and controls are chrome rather than content and
+     are deliberately left out - scaling those too just crowds the edges. */
+  --scale: 1.18;
+
+  /* The gap between the last line of the byline and the bottom edge. The
+     block is anchored to the bottom of the frame, not centred in it - see
+     .lesson. */
+  --bottom-gap: 100px;
+}
+
+/*
+  A fixed gap is room given away, and a short window has none to give. The
+  longest lesson build-lessons.py will emit is MAX_LEN, which at 880x440 fills
+  the frame on its own. So the gap closes as the viewport shortens rather than
+  holding a number that only suits a full-height window. Keep enough room for
+  the fixed next/theme controls. Paired with the overflow rule on body: in the
+  case that still does not fit, the page scrolls rather than losing a line.
+*/
+@media (max-height: 780px) {
+  :root {
+    --bottom-gap: 88px;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  /* Match the dark Tahoe tint used by ChatGPT glass. */
+  --cgh-site-tint: rgba(17, 17, 27, 0.34);
+  background-color: var(--frame);
+  color: var(--text);
+  font-family: var(--mono);
+  /* Not hidden: a window short enough to overrun even the reduced lift should
+     scroll, because clipping a lesson loses the byline first and there is no
+     sign it happened. In every normal window nothing overflows and no
+     scrollbar appears. */
+  overflow: auto;
+}
+
+/* ---- the lesson ------------------------------------------------------- */
+
+.lesson {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 100%;
+  /* Bottom of the frame, centred across it - not centred vertically. The
+     block grows upward from --bottom-gap, so the byline lands in the same
+     place on every tab and it is the claim that moves as a lesson runs long.
+     A centred block instead drifts both ways with the length of the text.
+
+     The gap is padding rather than a margin because the block is min-height
+     100% with border-box sizing: a margin would push past the viewport and
+     add a scrollbar to every tab. */
+  padding: 8vh 0 var(--bottom-gap);
+  text-align: center;
+}
+
+.lesson-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: min(92vw, 1200px);
+  max-width: 1200px;
+}
+
+.claim {
+  margin: 0 0 1.1rem;
+  /* Scales with the window rather than stepping at breakpoints, because this
+     page is opened at every window size from a half-tile to full screen. The
+     title uses the full centred column so it wraps naturally above the body.
+
+     The three lesson sizes are multiplied by --scale rather than rewritten,
+     so the ratios between claim, body and byline survive a resize and the
+     adjustment stays legible as one number. */
+  font-size: calc(clamp(1.3rem, 2.3vw, 2.1rem) * var(--scale));
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  text-align: left;
+  width: 100%;
+  text-wrap: balance;
+  color: var(--accent);
+  text-shadow: 0 1px 24px color-mix(in srgb, var(--frame) 85%, transparent);
+}
+
+.body {
+  margin: 0;
+  /* Share the title's left edge within the centred lesson column. */
+  width: 100%;
+  text-align: left;
+  font-size: calc(clamp(0.82rem, 0.95vw, 1.04rem) * var(--scale));
+  /* Looser than the 1.62 a serif wanted: monospaced text has no width cues to
+     separate lines, so the leading has to do that work on its own. */
+  line-height: 1.78;
+  text-wrap: pretty;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgb(17 17 27 / 60%);
+}
+
+.source {
+  margin: 2.1rem 0 0;
+  width: 100%;
+  text-align: left;
+  font-size: calc(0.7rem * var(--scale));
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.source cite {
+  font-style: normal;
+}
+
+.author::before {
+  /* Drawn in CSS so that a lesson with no author - seven books carry none -
+     collapses to the title with no stray separator. */
+  content: " · ";
+}
+
+.author:empty {
+  display: none;
+}
+
+/* ---- corners ---------------------------------------------------------- */
+
+.controls {
+  position: fixed;
+  right: 1.4rem;
+  bottom: 1.15rem;
+  display: flex;
+  gap: 1.1rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  z-index: 1;
+}
+
+.lesson-copy,
+.controls,
+.empty-state {
+  backdrop-filter: blur(16px) saturate(104%);
+  -webkit-backdrop-filter: blur(16px) saturate(104%);
+  border: 1px solid color-mix(in srgb, var(--text) 14%, transparent);
+  border-radius: 18px;
+  box-shadow: 0 12px 36px rgb(17 17 27 / 18%);
+}
+
+.lesson-copy {
+  padding: clamp(1.25rem, 3vw, 1rem);
+}
+.controls {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.ctl {
+  padding: 0.4rem 0.6rem;
+  border: none;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+}
+.ctl:hover {
+  color: var(--accent);
+}
+.ctl:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+.ctl:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+[hidden] {
+  display: none !important;
+}
+.empty-state {
+  position: absolute;
+  bottom: var(--bottom-gap);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(92vw, 42rem);
+  padding: 1.5rem;
+  line-height: 1.7;
+  font-size: 0.85rem;
+}
+@media (prefers-contrast: more) {
+  .lesson-copy,
+  .controls,
+  .empty-state {
+    background: var(--frame);
+  }
+  .claim,
+  .body,
+  .source {
+    opacity: 1;
+  }
+}
