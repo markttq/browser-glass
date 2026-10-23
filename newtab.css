@@ -112,9 +112,9 @@ body {
   width: min(92vw, 1200px);
   max-width: 1200px;
   /* Follow the letters closely so the wallpaper stays clear between lines. */
-  -webkit-text-stroke: 0.4px rgb(17 17 27 / 90%);
+  -webkit-text-stroke: 0.25px rgb(5 53 66 / 50%);
   paint-order: stroke fill;
-  text-shadow: 0 1px 2px rgb(17 17 27 / 95%), 0 0 4px rgb(17 17 27 / 80%);
+  text-shadow: 0 1px 2px rgb(5 45 56 / 70%), 0 0 4px rgb(5 45 56 / 35%);
 }
 
 /* Sea-blue and teal darkening that fades into the wallpaper on every edge. */
@@ -157,7 +157,7 @@ body {
   width: 100%;
   text-wrap: balance;
   color: var(--accent);
-  -webkit-text-stroke-width: 0.6px;
+  -webkit-text-stroke-width: 0.35px;
 }
 
 .body {
