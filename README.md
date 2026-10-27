@@ -1,6 +1,6 @@
 # Browser Glass
 
-Tahoe wallpaper and glass styling for ChatGPT, DuckDuckGo, YouTube, Docker, and GitHub, with ChatGPT reasoning shortcuts and Markentum daily reading lessons on the new tab page.
+Tahoe wallpaper and glass styling for ChatGPT, DuckDuckGo, YouTube, Docker, GitHub, and Reddit, with ChatGPT reasoning shortcuts and Markentum daily reading lessons on the new tab page.
 
 Version 0.9.0.
 
@@ -11,6 +11,7 @@ Version 0.9.0.
 - Gives YouTube a wallpaper background and blurred glass header and sidebar, following its light or dark theme.
 - Reveals the wallpaper around YouTube's watch-page player and disables its ambient background glow.
 - Adds glass navigation and reading surfaces to Docker Docs, following its light or dark theme, and translucent sections on docker.com.
+- Adds the wallpaper and glass navigation, posts, and sidebars to Reddit, following its light or dark theme.
 - Adds a manual Shift+Tab reasoning shortcut to ChatGPT, preserving picker discovery and focus restoration. It does no work until you use the shortcut.
 - Uses static extension CSS to hide the picker while the shortcut runs.
 - Starts the wallpaper and glass CSS at `document_start`, so the image can load while the page is still loading. ChatGPT reasoning shortcuts keep their stable `document_idle` startup timing.
@@ -21,7 +22,7 @@ Version 0.9.0.
 1. Open `vivaldi://extensions`.
 2. Enable **Developer mode**.
 3. Choose **Load unpacked** and select this folder.
-4. Refresh ChatGPT, DuckDuckGo, YouTube, Docker, and GitHub tabs after loading the extension.
+4. Refresh ChatGPT, DuckDuckGo, YouTube, Docker, GitHub, and Reddit tabs after loading the extension.
 
 Shortcut: **Shift+Tab** cycles Instant → Medium → High → Instant. XHigh/Pro remain manual-only.
 

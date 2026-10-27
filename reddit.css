@@ -1,0 +1,50 @@
+/* Follow Reddit's selected theme, including automatic theme changes. */
+:root {
+  --cgh-site-tint: rgba(255, 255, 255, .34);
+  --cgh-reddit-glass: rgba(255, 255, 255, .72);
+  --cgh-reddit-hover: rgba(255, 255, 255, .86);
+}
+
+html.theme-dark {
+  --cgh-site-tint: rgba(17, 17, 27, .34);
+  --cgh-reddit-glass: rgba(17, 17, 27, .72);
+  --cgh-reddit-hover: rgba(24, 24, 37, .86);
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not(.theme-light):not(.theme-dark) {
+    --cgh-site-tint: rgba(17, 17, 27, .34);
+    --cgh-reddit-glass: rgba(17, 17, 27, .72);
+    --cgh-reddit-hover: rgba(24, 24, 37, .86);
+  }
+}
+
+/* Community themes paint the grid above the body's wallpaper. */
+shreddit-app,
+shreddit-app .grid-container,
+#subgrid-container,
+.main-container,
+#main-content {
+  background: transparent !important;
+}
+
+reddit-header-large header,
+#left-sidebar,
+#right-sidebar-container aside,
+shreddit-post,
+#main-content:has(shreddit-comment-tree) {
+  background: var(--cgh-reddit-glass) !important;
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+
+/* Use one reading surface for the post and its comment thread. */
+#main-content:has(shreddit-comment-tree) shreddit-post {
+  background: transparent !important;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+shreddit-feed shreddit-post:is(:hover, :focus-within) {
+  background: var(--cgh-reddit-hover) !important;
+}

@@ -82,6 +82,20 @@
     },
     {
       "matches": [
+        "https://reddit.com/*",
+        "https://www.reddit.com/*"
+      ],
+      "js": [
+        "wallpaper.js"
+      ],
+      "run_at": "document_start",
+      "css": [
+        "wallpaper-sites.css",
+        "reddit.css"
+      ]
+    },
+    {
+      "matches": [
         "https://github.com/*"
       ],
       "js": [
@@ -108,7 +122,9 @@
         "https://docs.docker.com/*",
         "https://docker.com/*",
         "https://www.docker.com/*",
-        "https://github.com/*"
+        "https://github.com/*",
+        "https://reddit.com/*",
+        "https://www.reddit.com/*"
       ]
     }
   ],
